@@ -1,4 +1,8 @@
- using System;
+/*****************************
+  *   Лабораторная работа      *
+  *             № 4            *
+  ******************************/ 
+using System;
  using System.Text;
  using System.Runtime.Serialization.Formatters.Binary;
  using System.Xml.Serialization;
