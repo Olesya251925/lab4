@@ -1,7 +1,3 @@
-/*****************************
- *   Лабораторная работа      *
- *             № 4            *
- ******************************/
  using System;
  using System.Text;
  using System.Runtime.Serialization.Formatters.Binary;
