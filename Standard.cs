@@ -12,7 +12,7 @@ namespace ConsoleApp1
 {
     class Memento
     {
-        public string text { get; set; }
+        public string Text { get; set; }
     }
     public interface IOriginator
     {
@@ -21,17 +21,17 @@ namespace ConsoleApp1
     }
 
     [Serializable]
-    public class txtFile : IOriginator
+    public class TxtFile : IOriginator
     {
-        public string text;
-        public string tags;
+        public string Text;
+        public string Tags;
 
-        public txtFile() { }
+        public TxtFile() { }
 
-        public txtFile(string text, string tags)
+        public TxtFile(string Text, string Tags)
         {
-            this.text = text;
-            this.tags = tags;
+            this.Text = Text;
+            this.Tags = Tags;
         }
 
         public string BinarySerialize()
@@ -49,15 +49,15 @@ namespace ConsoleApp1
         {
             FileStream fs = new FileStream(FileName, FileMode.OpenOrCreate, FileAccess.Read);
             BinaryFormatter bf = new BinaryFormatter();
-            txtFile deserialized = (txtFile)bf.Deserialize(fs);
-            text = deserialized.text;
+            TxtFile deserialized = (TxtFile)bf.Deserialize(fs);
+            Text = deserialized.Text;
             fs.Close();
         }
 
-        static public string XMLSerialize(txtFile details)
+        static public string XMLSerialize(TxtFile details)
         {
             string FileName = "Данные XML";
-            XmlSerializer serializer = new XmlSerializer(typeof(txtFile));
+            XmlSerializer serializer = new XmlSerializer(typeof(TxtFile));
             using (TextWriter writer = new StreamWriter(FileName))
             {
                 serializer.Serialize(writer, details);
@@ -65,31 +65,31 @@ namespace ConsoleApp1
             return FileName;
         }
 
-        static public txtFile XMLDeserialize(string FileName)
+        static public TxtFile XMLDeserialize(string FileName)
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(txtFile));
+            XmlSerializer deserializer = new XmlSerializer(typeof(TxtFile));
             TextReader reader = new StreamReader(FileName);
             object obj = deserializer.Deserialize(reader);
-            txtFile XmlData = (txtFile)obj;
+            TxtFile XmlData = (TxtFile)obj;
             reader.Close();
             return XmlData;
         }
 
         public void PrintText()
         {
-            Console.WriteLine(text);
+            Console.WriteLine(Text);
         }
 
         object IOriginator.GetMemento()
         {
-            return new Memento { text = this.text };
+            return new Memento {Text = this.Text };
         }
         void IOriginator.SetMemento(object memento)
         {
             if (memento is Memento)
             {
                 var mem = memento as Memento;
-                text = mem.text;
+                Text = mem.Text;
             }
         }
     }
@@ -110,11 +110,11 @@ namespace ConsoleApp1
     class FileSearch
     {
         public string FoundFiles = "";
-        public void Search(txtFile[] library, string Request, int numberOfFiles)
+        public void Search(TxtFile[] library, string Request, int numberOfFiles)
         {
             for (int FileNumber = 0; FileNumber < numberOfFiles; ++FileNumber)
             {
-                if (library[FileNumber].tags == Request)
+                if (library[FileNumber].Tags == Request)
                 {
                     FoundFiles += FileNumber + " ";
                 }
@@ -137,29 +137,29 @@ namespace ConsoleApp1
         {
 
             const int NumberOfFiles = 10;
-            txtFile[] Library = new txtFile[NumberOfFiles];
-            txtFile file;
+            TxtFile[] Library = new TxtFile[NumberOfFiles];
+            TxtFile File;
 
-            file = new txtFile("Insidious, evil and formidable animal", "Wolf");
-            Library[0] = file;
-            file = new txtFile("Cunning, cunning and smart", "Fox");
-            Library[1] = file;
-            file = new txtFile("Little black-eyed animals, love nuts", "Squirrel");
-            Library[2] = file;
-            file = new txtFile("Yellow-red forest cat with the famous bones on the ears", "Lynx");
-            Library[3] = file;
-            file = new txtFile("An animal with a long narrow muzzle and dark stripes stretching from eyes to ears", "Badger");
-            Library[4] = file;
-            file = new txtFile("Flexible, agile and strong. Can swim and climb trees.", "Lynx");
-            Library[5] = file;
-            file = new txtFile("They bear cubs for a little over a month", "Squirrel");
-            Library[6] = file;
-            file = new txtFile("The tail is fluffy and red, sometimes black at the tip", "Fox");
-            Library[7] = file;
-            file = new txtFile("When you see this animal, you should not look him in the eye.", "Wolf");
-            Library[8] = file;
-            file = new txtFile("They get very fat by the cold - sometimes twice", "Badger");
-            Library[9] = file;
+            File = new TxtFile("Insidious, evil and formidable animal", "Wolf");
+            Library[0] = File;
+            File = new TxtFile("Cunning, cunning and smart", "Fox");
+            Library[1] = File;
+            File = new TxtFile("Little black-eyed animals, love nuts", "Squirrel");
+            Library[2] = File;
+            File = new TxtFile("Yellow-red forest cat with the famous bones on the ears", "Lynx");
+            Library[3] = File;
+            File = new TxtFile("An animal with a long narrow muzzle and dark stripes stretching from eyes to ears", "Badger");
+            Library[4] = File;
+            File = new TxtFile("Flexible, agile and strong. Can swim and climb trees.", "Lynx");
+            Library[5] = File;
+            File = new TxtFile("They bear cubs for a little over a month", "Squirrel");
+            Library[6] = File;
+            File = new TxtFile("The tail is fluffy and red, sometimes black at the tip", "Fox");
+            Library[7] = File;
+            File = new TxtFile("When you see this animal, you should not look him in the eye.", "Wolf");
+            Library[8] = File;
+            File = new TxtFile("They get very fat by the cold - sometimes twice", "Badger");
+            Library[9] = File;
 
             Console.WriteLine("Поиск ключевых слов: ");
             string Request = Convert.ToString(Console.ReadLine());
@@ -178,7 +178,7 @@ namespace ConsoleApp1
 
             Console.WriteLine("\nВведите новый текст файла: ");
             string NewText = Convert.ToString(Console.ReadLine());
-            Library[FileNumber].text = NewText;
+            Library[FileNumber].Text = NewText;
             Console.WriteLine("\nСохранить новый текст? " +
                               "\n1 Да" +
                               "\n2 Нет");
